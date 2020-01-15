@@ -89,10 +89,13 @@
     <ClCompile Include="io\endianness.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="tests\01-io\02-read-to-tests.cpp">
+    <ClCompile Include="tests\01-io\04-read-array-tests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="tests\01-io\01-endianness-tests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tests\01-io\02-read-to-tests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="tests\01-io\03-read-tests.cpp">

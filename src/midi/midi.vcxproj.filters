@@ -60,6 +60,9 @@
     <ClInclude Include="io\read.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="io\vli.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="app.cpp">
@@ -99,6 +102,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="tests\01-io\03-read-tests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="io\vli.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tests\01-io\05-read-variable-length-integer-tests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -212,6 +212,7 @@
     <ClInclude Include="imaging\bitmap.h" />
     <ClInclude Include="imaging\bmp-format.h" />
     <ClInclude Include="imaging\color.h" />
+    <ClInclude Include="io\read.h" />
     <ClInclude Include="logging.h" />
     <ClInclude Include="shell\command-line-parser.h" />
     <ClInclude Include="tests\tests-util.h" />
@@ -231,6 +232,7 @@
     <ClCompile Include="logging.cpp" />
     <ClCompile Include="shell\command-line-parser.cpp" />
     <ClCompile Include="tests\01-io\01-endianness-tests.cpp" />
+    <ClCompile Include="tests\01-io\02-read-to-tests.cpp" />
     <ClCompile Include="tests\tests.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

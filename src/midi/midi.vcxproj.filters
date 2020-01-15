@@ -57,6 +57,9 @@
     <ClInclude Include="io\endianness.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="io\read.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="app.cpp">
@@ -83,10 +86,13 @@
     <ClCompile Include="shell\command-line-parser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="tests\01-io\01-endianness-tests.cpp">
+    <ClCompile Include="io\endianness.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="io\endianness.cpp">
+    <ClCompile Include="tests\01-io\02-read-to-tests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tests\01-io\01-endianness-tests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

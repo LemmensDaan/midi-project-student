@@ -95,5 +95,8 @@
     <ClCompile Include="tests\01-io\01-endianness-tests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="tests\01-io\03-read-tests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

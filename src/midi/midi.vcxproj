@@ -233,6 +233,7 @@
     <ClCompile Include="shell\command-line-parser.cpp" />
     <ClCompile Include="tests\01-io\01-endianness-tests.cpp" />
     <ClCompile Include="tests\01-io\02-read-to-tests.cpp" />
+    <ClCompile Include="tests\01-io\03-read-tests.cpp" />
     <ClCompile Include="tests\tests.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

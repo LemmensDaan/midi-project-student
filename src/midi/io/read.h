@@ -15,6 +15,14 @@ namespace io
 			buffer[i] = readTo;
 		}
 	}
+
+	// read a single T from in and return it
+	template<typename T, typename std::enable_if<std::is_fundamental<T>::value, T>::type* = nullptr>
+	T read(std::istream& in) {
+		T readTo;
+		io::read_to(in, &readTo);
+		return readTo;
+	}
 }
 
 #endif

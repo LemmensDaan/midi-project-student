@@ -9,19 +9,19 @@ namespace io
 	template <typename T>
 	void read_to(std::istream& in, T* buffer, size_t n = 1) {
 		for (int i = 0; i < n; i++) {
-			T readTo;
-			in.read(reinterpret_cast<char*> (&readTo), sizeof(T));
+			T read;
+			in.read(reinterpret_cast<char*> (&read), sizeof(T));
 			CHECK(!in.fail()) << "failed";
-			buffer[i] = readTo;
+			buffer[i] = read;
 		}
 	}
 
 	// read a single T from in and return it
 	template<typename T, typename std::enable_if<std::is_fundamental<T>::value, T>::type* = nullptr>
 	T read(std::istream& in) {
-		T readTo;
-		io::read_to(in, &readTo);
-		return readTo;
+		T read;
+		io::read_to(in, &read);
+		return read;
 	}
 }
 

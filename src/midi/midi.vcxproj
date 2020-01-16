@@ -215,6 +215,7 @@
     <ClInclude Include="io\read.h" />
     <ClInclude Include="io\vli.h" />
     <ClInclude Include="logging.h" />
+    <ClInclude Include="midi\primitives.h" />
     <ClInclude Include="shell\command-line-parser.h" />
     <ClInclude Include="tests\tests-util.h" />
     <ClInclude Include="util\array.h" />
@@ -232,12 +233,14 @@
     <ClCompile Include="imaging\color.cpp" />
     <ClCompile Include="io\vli.cpp" />
     <ClCompile Include="logging.cpp" />
+    <ClCompile Include="midi\primitives.cpp" />
     <ClCompile Include="shell\command-line-parser.cpp" />
     <ClCompile Include="tests\01-io\01-endianness-tests.cpp" />
     <ClCompile Include="tests\01-io\02-read-to-tests.cpp" />
     <ClCompile Include="tests\01-io\03-read-tests.cpp" />
     <ClCompile Include="tests\01-io\04-read-array-tests.cpp" />
     <ClCompile Include="tests\01-io\05-read-variable-length-integer-tests.cpp" />
+    <ClCompile Include="tests\02-midi\01-primitives\01-channel-tests.cpp" />
     <ClCompile Include="tests\tests.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

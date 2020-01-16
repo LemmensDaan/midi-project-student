@@ -16,11 +16,12 @@ public:
     explicit tagged(const T& value) : _value(value) { }    
 
     // https://isocpp.org/wiki/faq/templates#template-friends
+    // Gives read/write access to _value
     friend T& value(tagged<T, TAG>& st)
     {
         return st._value;
     }
-
+    // Gives read access to _value
     friend const T& value(const tagged<T, TAG>& st)
     {
         return st._value;

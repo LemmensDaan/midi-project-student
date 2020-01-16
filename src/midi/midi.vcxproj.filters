@@ -63,6 +63,9 @@
     <ClInclude Include="io\vli.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="midi\primitives.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="app.cpp">
@@ -108,6 +111,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="tests\01-io\05-read-variable-length-integer-tests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="midi\primitives.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tests\02-midi\01-primitives\01-channel-tests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

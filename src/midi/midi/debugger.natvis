@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">
+  <Type Name="midi::Channel">
+    <DisplayString>{{channel = {_value,d}}}</DisplayString>
+  </Type>
+  <Type Name="midi::Instrument">
+    <DisplayString>{{instrument = {_value,d}}}</DisplayString>
+  </Type>
+  <Type Name="midi::NoteNumber">
+    <DisplayString>{{noteNumber = {_value,d}}}</DisplayString>
+  </Type>
+  <Type Name="midi::Time">
+    <DisplayString>{{time = {_value,d}}}</DisplayString>
+  </Type>
+  <Type Name="midi::Duration">
+    <DisplayString>{{duration = {_value,d}}}</DisplayString>
+  </Type>
+</AutoVisualizer>

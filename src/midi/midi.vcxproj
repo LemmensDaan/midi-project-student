@@ -247,6 +247,9 @@
     <ClCompile Include="tests\02-midi\01-primitives\05-time-tests.cpp" />
     <ClCompile Include="tests\tests.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="midi\debugger.natvis" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

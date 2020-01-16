@@ -215,6 +215,7 @@
     <ClInclude Include="io\read.h" />
     <ClInclude Include="io\vli.h" />
     <ClInclude Include="logging.h" />
+    <ClInclude Include="midi\midi.h" />
     <ClInclude Include="midi\primitives.h" />
     <ClInclude Include="shell\command-line-parser.h" />
     <ClInclude Include="tests\tests-util.h" />
@@ -233,7 +234,7 @@
     <ClCompile Include="imaging\color.cpp" />
     <ClCompile Include="io\vli.cpp" />
     <ClCompile Include="logging.cpp" />
-    <ClCompile Include="midi\primitives.cpp" />
+    <ClCompile Include="midi\midi.cpp" />
     <ClCompile Include="shell\command-line-parser.cpp" />
     <ClCompile Include="tests\01-io\01-endianness-tests.cpp" />
     <ClCompile Include="tests\01-io\02-read-to-tests.cpp" />
@@ -245,10 +246,11 @@
     <ClCompile Include="tests\02-midi\01-primitives\03-instruments-tests.cpp" />
     <ClCompile Include="tests\02-midi\01-primitives\04-note-number-tests.cpp" />
     <ClCompile Include="tests\02-midi\01-primitives\05-time-tests.cpp" />
+    <ClCompile Include="tests\02-midi\02-chunk-headers\01-chunk-header-tests.cpp" />
     <ClCompile Include="tests\tests.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Natvis Include="midi\debugger.natvis" />
+    <Natvis Include="debugger.natvis" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -14,4 +14,9 @@ namespace midi {
 		io::switch_endianness(&header->size);
 	}
 
+	std::string header_id(const CHUNK_HEADER header)
+	{
+		return std::string(header.id, 4);
+	}
+
 }

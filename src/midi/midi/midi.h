@@ -21,5 +21,7 @@ namespace midi
 	};
 
 	void read_chunk_header(std::istream& in, CHUNK_HEADER* header);
+
+	std::string header_id(const CHUNK_HEADER header);
 }
 #endif

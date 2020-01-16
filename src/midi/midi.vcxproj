@@ -248,6 +248,7 @@
     <ClCompile Include="tests\02-midi\01-primitives\05-time-tests.cpp" />
     <ClCompile Include="tests\02-midi\02-chunk-headers\01-chunk-header-tests.cpp" />
     <ClCompile Include="tests\02-midi\02-chunk-headers\02-read-chunk-header-tests.cpp" />
+    <ClCompile Include="tests\02-midi\02-chunk-headers\03-header-id-tests.cpp" />
     <ClCompile Include="tests\tests.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -140,6 +140,9 @@
     <ClCompile Include="tests\02-midi\02-chunk-headers\02-read-chunk-header-tests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="tests\02-midi\02-chunk-headers\03-header-id-tests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="debugger.natvis" />

@@ -244,6 +244,7 @@
     <ClCompile Include="tests\02-midi\01-primitives\02-channel-show-tests.cpp" />
     <ClCompile Include="tests\02-midi\01-primitives\03-instruments-tests.cpp" />
     <ClCompile Include="tests\02-midi\01-primitives\04-note-number-tests.cpp" />
+    <ClCompile Include="tests\02-midi\01-primitives\05-time-tests.cpp" />
     <ClCompile Include="tests\tests.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

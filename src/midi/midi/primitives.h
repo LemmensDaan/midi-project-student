@@ -1,6 +1,36 @@
 #include "util/tagged.h"
 
 namespace midi {
+	// Operators for time and duration
+	template<typename L, typename R, typename V>
+	struct add {
+		friend V operator +(const L& x, const R& y) {
+			return V(value(x) + value(y));
+		}
+	};
+
+	template<typename L, typename R, typename V>
+	struct sub {
+		friend V operator -(const L& x, const R& y) {
+			return V(value(x) - value(y));
+		}
+	};
+
+	template<typename L, typename R>
+	struct assignment_add {
+		friend L& operator +=(L& x, const R& y) {
+			x = x + y;
+			return x;
+		}
+	};
+
+	template<typename L, typename R>
+	struct assignment_sub {
+		friend L& operator -=(L& x, const R& y) {
+			x = x - y;
+			return x;
+		}
+	};
 	// Channels
 	// new type channel that only supports == and !=, (also << after channel show)
 	struct __declspec(empty_bases)Channel : tagged<uint8_t, Channel>, equality<Channel>, show_value<Channel, int> {
@@ -18,4 +48,32 @@ namespace midi {
 	struct __declspec(empty_bases)NoteNumber : tagged<uint8_t, NoteNumber>, ordered<NoteNumber>, show_value<NoteNumber, int> {
 		using tagged::tagged;
 	};
+
+	// Declare Duration for Time
+	struct __declspec(empty_bases)Duration;
+
+	// Time: represents an absolute moment in time.
+	// Apart from these + and - operators, this also supports ==, !=, <, >, <=, >= and <<.
+	struct __declspec(empty_bases)Time : tagged<uint64_t, Time>, ordered<Time>, show_value<Time, int>,
+		add<Time, Duration, Time>,
+		sub<Time, Time, Duration>,
+		assignment_add<Time, Duration> {
+			using tagged::tagged;
+	};
+
+	// Duration: represents the difference between two Times.
+	struct __declspec(empty_bases)Duration : tagged<uint64_t, Duration>, ordered<Duration>, show_value<Duration, int>,
+		add<Duration, Duration, Duration>,
+		add<Duration, Time, Time>,
+		sub<Duration, Duration, Duration>,
+		assignment_add<Duration, Duration>,
+		assignment_sub<Duration, Duration> {
+			using tagged::tagged;
+	};
+
+
+
+
+
+
 }

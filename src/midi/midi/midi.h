@@ -19,9 +19,28 @@ namespace midi
 		// size is also 4 bytes long
 		uint32_t size;
 	};
-
+	
 	void read_chunk_header(std::istream& in, CHUNK_HEADER* header);
 
 	std::string header_id(const CHUNK_HEADER header);
+
+
+	/*------------
+	| -- MTHD -- |
+	 -----------*/
+
+	#pragma pack(push,1)
+	struct MTHD {
+		// chunk header				-- 8 bytes
+		CHUNK_HEADER header;
+		// type of MIDI file		-- 2 bytes
+		uint16_t type;
+		// number of tracks			-- 2 bytes
+		// 0 or 1 (0 = single track, 1 = multiple tracks that form single piece of music)
+		uint16_t ntracks;
+		// number of units per beat	-- 2 bytes
+		uint16_t division;
+	};
+	#pragma pack(pop)
 }
 #endif

@@ -19,4 +19,8 @@ namespace midi {
 		return std::string(header.id, 4);
 	}
 
+
+	/*------------
+	| -- MTHD -- |
+	 -----------*/
 }

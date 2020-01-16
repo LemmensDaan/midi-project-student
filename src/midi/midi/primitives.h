@@ -2,17 +2,17 @@
 
 namespace midi {
 	// Operators for time and duration
-	template<typename L, typename R, typename V>
+	template<typename Result, typename L, typename R>
 	struct add {
-		friend V operator +(const L& x, const R& y) {
-			return V(value(x) + value(y));
+		friend Result operator +(const L& x, const R& y) {
+			return Result(value(x) + value(y));
 		}
 	};
 
-	template<typename L, typename R, typename V>
+	template<typename Result, typename L, typename R>
 	struct sub {
-		friend V operator -(const L& x, const R& y) {
-			return V(value(x) - value(y));
+		friend Result operator -(const L& x, const R& y) {
+			return Result(value(x) - value(y));
 		}
 	};
 
@@ -55,8 +55,9 @@ namespace midi {
 	// Time: represents an absolute moment in time.
 	// Apart from these + and - operators, this also supports ==, !=, <, >, <=, >= and <<.
 	struct __declspec(empty_bases)Time : tagged<uint64_t, Time>, ordered<Time>, show_value<Time, int>,
+		add<Time, Time, Duration>,
 		add<Time, Duration, Time>,
-		sub<Time, Time, Duration>,
+		sub<Duration, Time, Time>,
 		assignment_add<Time, Duration> {
 			using tagged::tagged;
 	};
@@ -64,7 +65,7 @@ namespace midi {
 	// Duration: represents the difference between two Times.
 	struct __declspec(empty_bases)Duration : tagged<uint64_t, Duration>, ordered<Duration>, show_value<Duration, int>,
 		add<Duration, Duration, Duration>,
-		add<Duration, Time, Time>,
+		sub<Duration, Time, Time>,
 		sub<Duration, Duration, Duration>,
 		assignment_add<Duration, Duration>,
 		assignment_sub<Duration, Duration> {

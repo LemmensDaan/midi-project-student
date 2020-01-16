@@ -122,5 +122,8 @@
     <ClCompile Include="tests\02-midi\01-primitives\02-channel-show-tests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="tests\02-midi\01-primitives\03-instruments-tests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

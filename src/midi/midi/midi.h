@@ -42,5 +42,7 @@ namespace midi
 		uint16_t division;
 	};
 	#pragma pack(pop)
+
+	void read_mthd(std::istream& in, MTHD* chunk);
 }
 #endif

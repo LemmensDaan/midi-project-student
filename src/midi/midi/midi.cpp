@@ -23,4 +23,14 @@ namespace midi {
 	/*------------
 	| -- MTHD -- |
 	 -----------*/
+
+	void read_mthd(std::istream& in, MTHD* chunk)
+	{
+		io::read_to(in, chunk);
+		io::switch_endianness(&chunk->header.size);
+		io::switch_endianness(&chunk->type);
+		io::switch_endianness(&chunk->ntracks);
+		io::switch_endianness(&chunk->division);
+
+	}
 }

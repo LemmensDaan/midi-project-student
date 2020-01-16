@@ -241,6 +241,7 @@
     <ClCompile Include="tests\01-io\04-read-array-tests.cpp" />
     <ClCompile Include="tests\01-io\05-read-variable-length-integer-tests.cpp" />
     <ClCompile Include="tests\02-midi\01-primitives\01-channel-tests.cpp" />
+    <ClCompile Include="tests\02-midi\01-primitives\02-channel-show-tests.cpp" />
     <ClCompile Include="tests\tests.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

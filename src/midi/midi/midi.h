@@ -74,5 +74,39 @@ namespace midi
 	bool is_pitch_wheel_change(uint8_t status);
 
 
+	// EVENT RECEIVER
+
+	class EventReceiver
+	{
+	public:
+		virtual void meta(Duration dt, uint8_t type, std::unique_ptr<uint8_t[]> data, uint64_t data_size);
+		virtual void sysex(Duration dt, std::unique_ptr<uint8_t[]> data, uint64_t data_size);
+		virtual void note_on(Duration dt, Channel channel, NoteNumber note, uint8_t velocity);
+		virtual void note_off(Duration dt, Channel channel, NoteNumber note, uint8_t velocity);
+		virtual void polyphonic_key_pressure(Duration dt, Channel channel, NoteNumber note, uint8_t pressure);
+		virtual void control_change(Duration dt, Channel channel, uint8_t controller, uint8_t value);
+		virtual void program_change(Duration dt, Channel channel, Instrument program);
+		virtual void channel_pressure(Duration dt, Channel channel, uint8_t pressure);
+		virtual void pitch_wheel_change(Duration dt, Channel channel, uint16_t value);
+	};
+
+	/*void read_file(Receiver& receiver)
+	{
+		while (file_not_ended())
+		{
+			char c = read_next_char();
+
+			switch (c)
+			{
+			case 'A':
+				receiver.process_a();
+				break;
+
+			case 'B':
+				receiver.process_b();
+				break;
+			}
+		}
+	}*/
 }
 #endif

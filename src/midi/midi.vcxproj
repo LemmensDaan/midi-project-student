@@ -252,6 +252,7 @@
     <ClCompile Include="tests\02-midi\03-mthd\01-mthd-tests.cpp" />
     <ClCompile Include="tests\02-midi\03-mthd\02-read-mthd-tests.cpp" />
     <ClCompile Include="tests\02-midi\04-mtrk\01-mtrk-auxiliary-tests.cpp" />
+    <ClCompile Include="tests\02-midi\04-mtrk\02-mtrk-event-receiver-tests.cpp" />
     <ClCompile Include="tests\tests.cpp" />
   </ItemGroup>
   <ItemGroup>

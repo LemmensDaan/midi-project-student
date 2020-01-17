@@ -2,6 +2,7 @@
 #ifndef MIDI_H
 #define MIDI_H
 #include <iostream>
+#include "midi/primitives.h"
 namespace midi
 {
 	// Explanation of MTHD / MTRK chunk headers
@@ -44,5 +45,34 @@ namespace midi
 	#pragma pack(pop)
 
 	void read_mthd(std::istream& in, MTHD* chunk);
+
+	/*------------
+	| -- MTRK -- |
+	 -----------*/
+
+	// Each event starts with a variable length integer designated the time elapsed since the previous event, followed by a byte that identifies the event. In the case of running status, the status byte can be missing.
+	bool is_sysex_event(uint8_t byte);
+	bool is_meta_event(uint8_t byte);
+	bool is_midi_event(uint8_t byte);
+	bool is_running_status(uint8_t byte);
+
+
+	// MIDI EVENTS 
+
+	// Returns the 4 upper bits of status.
+	uint8_t extract_midi_event_type(uint8_t status);
+	// Returns the 4 lower bits of status.
+	Channel extract_midi_event_channel(uint8_t status);
+
+	// Given the midi event type nibble, check whether it identifies a MIDI event of a specific type.
+	bool is_note_off(uint8_t status);
+	bool is_note_on(uint8_t status);
+	bool is_polyphonic_key_pressure(uint8_t status);
+	bool is_control_change(uint8_t status);
+	bool is_program_change(uint8_t status);
+	bool is_channel_pressure(uint8_t status);
+	bool is_pitch_wheel_change(uint8_t status);
+
+
 }
 #endif

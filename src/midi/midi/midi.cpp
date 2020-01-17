@@ -39,7 +39,7 @@ namespace midi {
 	| -- MTRK -- |
 	 -----------*/
 
-	// EVENTS
+	 // EVENTS
 
 	bool is_sysex_event(uint8_t byte)
 	{
@@ -121,14 +121,32 @@ namespace midi {
 			uint8_t b = io::read<uint8_t>(in);
 
 			if (is_meta_event(b)) {
+
 				uint8_t type = io::read<uint8_t>(in);
+
+
 				auto data_size = io::read_variable_length_integer(in);
 				std::unique_ptr<byte[]> data = io::read_array<byte>(in, data_size);
-				if (type == 0x2F) {
-					running = false;
+
+				if (data_size == 0) {
+					receiver.meta(dt, type, std::move(data), data_size);
+
+					// END EVENT
+					if (type == 0x2F) {
+						uint32_t endpost = in.tellg();
+						running = false;
+					}
+				}
+				else {
+					//std::unique_ptr<char[]> ptr(new char[data_size]);
+					//in.read(ptr.get(), data_size);
+					receiver.meta(dt, type, std::move(data), data_size);
 				}
 
-				receiver.meta(dt, type, std::move(data), data_size);
+				
+
+
+				
 			}
 
 			else if (is_sysex_event(b)) {
@@ -136,8 +154,58 @@ namespace midi {
 				std::unique_ptr<byte[]> data = io::read_array<byte>(in, data_size);
 				receiver.sysex(dt, std::move(data), data_size);
 			}
+		
+
+			else if (is_midi_event(b)) {
+				uint8_t eventType = extract_midi_event_type(b);
+				Channel channel = extract_midi_event_channel(b);
+			
+				if (is_note_off(eventType)) {
+					NoteNumber noteNumber = NoteNumber(io::read<uint8_t>(in));
+					uint8_t velocity = io::read<uint8_t>(in);
+					receiver.note_off(dt, channel, noteNumber, velocity);
+				}
+
+				else if (is_note_on(eventType)) {
+					NoteNumber noteNumber = NoteNumber(io::read<uint8_t>(in));
+					uint8_t velocity = io::read<uint8_t>(in);
+					receiver.note_on(dt, channel, noteNumber, velocity);
+				}
+
+				else if (is_polyphonic_key_pressure(eventType)) {
+					NoteNumber noteNumber = NoteNumber(io::read<uint8_t>(in));
+					uint8_t pressure = io::read<uint8_t>(in);
+					receiver.polyphonic_key_pressure(dt, channel, noteNumber, pressure);
+				}
+
+				else if (is_control_change(eventType)) {
+					uint8_t controller = io::read<uint8_t>(in);
+					uint8_t value = io::read<uint8_t>(in);
+					receiver.control_change(dt, channel, controller, value);
+				}
+
+				else if (is_program_change(eventType)) {
+					Instrument program = Instrument(io::read<uint8_t>(in));
+					receiver.program_change(dt, channel, program);
+				}
+
+				else if (is_channel_pressure(eventType)) {
+					uint8_t pressure = io::read<uint8_t>(in);
+					receiver.channel_pressure(dt, channel, pressure);
+				}
+
+				else if (is_pitch_wheel_change(eventType)) {
+					uint8_t lower = io::read<uint8_t>(in);
+					uint8_t higher = io::read<uint8_t>(in);
+					uint16_t value = (higher << 7) | lower;
+					receiver.pitch_wheel_change(dt, channel, value);
+				}
+
+			}
 
 
 		}
+
 	}
+
 }

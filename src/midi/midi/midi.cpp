@@ -1,6 +1,7 @@
 #include "midi.h"
 #include <io\read.h>
 #include <io\endianness.h>
+#include "io/vli.h"
 
 namespace midi {
 
@@ -37,6 +38,8 @@ namespace midi {
 	/*------------
 	| -- MTRK -- |
 	 -----------*/
+
+	// EVENTS
 
 	bool is_sysex_event(uint8_t byte)
 	{
@@ -102,4 +105,31 @@ namespace midi {
 	{
 		return (((status & 0xF0) >> 4) | ((status & 0x0F) << 4)) == 0xE0;
 	}
+
+
+	// READ MTRK
+
+	void read_mtrk(std::istream& in, EventReceiver& receiver)
+	{
+		bool running = true;
+
+		while (running) {
+			// read relative timestamp
+			Duration dt = Duration(io::read_variable_length_integer(in));
+			// read next byte
+			uint8_t b = io::read<uint8_t>(in);
+			
+			if (is_meta_event(b)) {
+				uint8_t type = io::read<uint8_t>(in);
+				auto data_size = io::read_variable_length_integer(in);
+				std::unique_ptr<byte[]> data = io::read_array<byte>(in, data_size);
+				if (type == 0x2F) {
+					running = false;
+				}
+
+				receiver.meta(dt, type, std::move(data), data_size);
+			}
+		}
+	}
 }
+

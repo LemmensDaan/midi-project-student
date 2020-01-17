@@ -155,6 +155,9 @@
     <ClCompile Include="tests\02-midi\04-mtrk\02-mtrk-event-receiver-tests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="tests\02-midi\04-mtrk\03-mtrk-empty-tests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="debugger.natvis" />

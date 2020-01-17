@@ -91,5 +91,48 @@ namespace midi
 	};
 
 	void read_mtrk(std::istream& in, EventReceiver& receiver);
+
+	/*-------------
+	| -- NOTES -- |
+	 ------------*/
+
+	struct NOTE {
+		NoteNumber note_number;
+		Time start;
+		Duration duration;
+		uint8_t velocity;
+		Instrument instrument;
+
+		NOTE(NoteNumber note_number_, Time start_, Duration duration_, uint8_t velocity_, Instrument instrument_)
+		{
+			note_number = note_number_;
+			start = start_;
+			duration = duration_;
+			velocity = velocity_;
+			instrument = instrument_;
+		}
+
+		friend bool operator == (const NOTE& note1, const NOTE& note2) {
+			return note1.note_number == note2.note_number
+				&& note1.start == note2.start
+				&& note1.duration == note2.duration
+				&& note1.velocity == note2.velocity
+				&& note1.instrument == note2.instrument;
+ 		}
+
+		friend bool operator != (const NOTE& note1, const NOTE& note2) {
+			return note1.note_number != note2.note_number
+				&& note1.start != note2.start
+				&& note1.duration != note2.duration
+				&& note1.velocity != note2.velocity
+				&& note1.instrument != note2.instrument;
+		}
+
+		friend std::ostream& operator << (std::ostream& os, const NOTE& note) {
+			os << "Note(number=" << note.note_number << ",start=" << note.start << ",duration=" << note.duration << ",instrument=" << note.instrument << ")";
+			return os;
+		}
+
+	};
 }
 #endif

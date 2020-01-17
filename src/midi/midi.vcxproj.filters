@@ -182,6 +182,9 @@
     <ClCompile Include="tests\02-midi\04-mtrk\12-mtrk-pitch-wheel-tests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="tests\02-midi\05-notes\01-note-tests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="debugger.natvis" />

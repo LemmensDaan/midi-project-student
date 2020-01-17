@@ -158,6 +158,12 @@
     <ClCompile Include="tests\02-midi\04-mtrk\03-mtrk-empty-tests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="tests\02-midi\04-mtrk\04-mtrk-meta-tests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tests\02-midi\04-mtrk\05-mtrk-sysex-tests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="debugger.natvis" />

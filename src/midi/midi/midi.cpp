@@ -48,12 +48,13 @@ namespace midi {
 
 	bool is_meta_event(uint8_t byte)
 	{
-		return  byte == 0xFF;
+		return byte == 0xFF;
 	}
 
 	bool is_midi_event(uint8_t byte)
 	{
-		return byte == 0x80 || byte == 0x81 || byte == 0x8F || byte == 0x95 || byte == 0xA3 || byte == 0xB8 || byte == 0xC3 || byte == 0xD1 || byte == 0xE7;
+		int b = byte & 0xF0;
+		return ((b == 0x80) || (b == 0x90) || (b == 0xA0) || (b == 0xB0) || (b == 0xC0) || (b == 0xD0) || (b == 0xE0));
 	}
 
 	bool is_running_status(uint8_t byte)
@@ -118,7 +119,7 @@ namespace midi {
 			Duration dt = Duration(io::read_variable_length_integer(in));
 			// read next byte
 			uint8_t b = io::read<uint8_t>(in);
-			
+
 			if (is_meta_event(b)) {
 				uint8_t type = io::read<uint8_t>(in);
 				auto data_size = io::read_variable_length_integer(in);
@@ -129,7 +130,14 @@ namespace midi {
 
 				receiver.meta(dt, type, std::move(data), data_size);
 			}
+
+			else if (is_sysex_event(b)) {
+				auto data_size = io::read_variable_length_integer(in);
+				std::unique_ptr<byte[]> data = io::read_array<byte>(in, data_size);
+				receiver.sysex(dt, std::move(data), data_size);
+			}
+
+
 		}
 	}
 }
-

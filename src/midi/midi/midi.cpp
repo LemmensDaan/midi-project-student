@@ -2,6 +2,12 @@
 #include <io\read.h>
 #include <io\endianness.h>
 #include "io/vli.h"
+#include <iostream>
+#include <string>
+#include <list>
+#include <memory>
+#include <vector>
+#include <ios>
 
 namespace midi {
 
@@ -221,15 +227,147 @@ namespace midi {
 
 	}
 
-	/*ChannelNoteCollector::ChannelNoteCollector(Channel channel_, std::function<void(const NOTE&)> notes_)
+	/*-------------
+	| -- NOTES -- |
+	 ------------*/
+
+	// CHANNEL NOTE COLLECTOR
+	ChannelNoteCollector::ChannelNoteCollector(Channel channel_, std::function<void(const NOTE&)> notes_)
 	{
 		channel = channel_;
-		notes = notes_;
+		note_receiver = notes_;
 	}
 
 	void ChannelNoteCollector::note_on(Duration dt, Channel channel, NoteNumber note, uint8_t velocity)
 	{
-		
-	}*/
+		/*if (this->channel == channel) {
+			if (velocity == 0) {
+				//delegeren aan ander event
+				note_off(dt, channel, note, 255);
+			}
+			else {
+				uint32_t max = 0;
+				for (unsigned i = 0; i < sizeof(note_receiver); i++) {
+					NOTE* foo = &(note_receiver->at(i));
+					if (foo->track == 0 && (foo->start + foo->duration) > max) {
+						max = foo->start + foo->duration;
+					}
+				}
+				note_receiver->push_back(NOTE{ channel, note, dt + max, 0 });
+			}
+		}*/
+	}
+
+	void ChannelNoteCollector::note_off(Duration dt, Channel channel, NoteNumber note, uint8_t velocity)
+	{
+		/*if (this->channel == channel) {
+
+			NOTE* current = nullptr;
+			unsigned position = 0;
+			uint32_t max = 0;
+
+			for (unsigned i = 0; i < sizeof(note_receiver); i++) {
+				NOTE* foo = &(note_receiver->at(i));
+				if (foo->track == 0 && (foo->start + foo->duration) > max) {
+					//if ((foo->start + foo->duration) > max) {
+
+					max = foo->start + foo->duration;
+				}
+				if (foo->track == 0 && foo->note_index == note) {
+					current = foo;
+					position = i;
+				}
+			}
+
+			if (current != nullptr) {
+				current->duration = max - current->start + dt;
+
+				bool busy = true;
+				for (unsigned i = 0; i < sizeof(note_receiver); i++ && busy) {
+					NOTE* foo = &(note_receiver->at(i));
+					if (foo->duration == 0) {
+						if (i < position) {
+							notes->reserve(notes->size());
+							std::swap(notes->at(i), notes->at(position));
+							busy = false;
+						}
+					}
+				}
+			}
+		}*/
+	}
+
+	
+	// MULTICASTER
+
+	EventMulticaster::EventMulticaster(std::vector<std::shared_ptr<EventReceiver>> eventsin)
+	{
+		for (unsigned i = 0; i < eventsin.size(); i++) {
+			events.push_back(eventsin[i]);
+		}
+	}
+
+	void EventMulticaster::note_on(Duration dt, Channel channel, NoteNumber note, uint8_t velocity)
+	{
+		for (auto& event : events) {
+			event->note_on(dt, channel, note, velocity);
+		}
+	}
+
+	void EventMulticaster::note_off(Duration dt, Channel channel, NoteNumber note, uint8_t velocity)
+	{
+		for (auto& event : events) {
+			event->note_off(dt, channel, note, velocity);
+		}
+	}
+
+	void EventMulticaster::polyphonic_key_pressure(Duration dt, Channel channel, NoteNumber note, uint8_t pressure)
+	{
+		for (auto& event : events) {
+			event->polyphonic_key_pressure(dt, channel, note, pressure);
+		}
+	}
+
+	void EventMulticaster::control_change(Duration dt, Channel channel, uint8_t controller, uint8_t value)
+	{
+		for (auto& event : events) {
+			event->control_change(dt, channel, controller, value);
+		}
+	}
+
+	void EventMulticaster::program_change(Duration dt, Channel channel, Instrument program)
+	{
+		for (auto& event : events) {
+			event->program_change(dt, channel, program);
+		}
+	}
+
+	void EventMulticaster::channel_pressure(Duration dt, Channel channel, uint8_t pressure)
+	{
+		for (auto& event : events) {
+			event->channel_pressure(dt, channel, pressure);
+		}
+	}
+
+	void EventMulticaster::pitch_wheel_change(Duration dt, Channel channel, uint16_t value)
+	{
+		for (auto& event : events) {
+			event->pitch_wheel_change(dt, channel, value);
+		}
+	}
+
+	void EventMulticaster::meta(Duration dt, uint8_t type, std::unique_ptr<uint8_t[]> data, uint64_t data_size)
+	{
+		for (auto& event : events) {
+			event->meta(dt, type, std::move(data), data_size);
+		}
+	}
+
+	void EventMulticaster::sysex(Duration dt, std::unique_ptr<uint8_t[]> data, uint64_t data_size)
+	{
+		for (auto& event : events) {
+			event->sysex(dt, std::move(data), data_size);
+		}
+	}
 
 }

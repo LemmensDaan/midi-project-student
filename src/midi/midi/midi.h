@@ -3,6 +3,8 @@
 #define MIDI_H
 #include <iostream>
 #include "midi/primitives.h"
+#include <functional>
+
 namespace midi
 {
 	// Explanation of MTHD / MTRK chunk headers
@@ -132,7 +134,28 @@ namespace midi
 			os << "Note(number=" << note.note_number << ",start=" << note.start << ",duration=" << note.duration << ",instrument=" << note.instrument << ")";
 			return os;
 		}
-
 	};
+
+	//class ChannelNoteCollector : EventReceiver {
+	//private:
+	//	Channel channel;
+	//	std::function<void(const NOTE&)> notes;
+	//public:
+	//	ChannelNoteCollector(Channel channel_, std::function<void(const NOTE&)> notes_);
+
+	//	void note_on(Duration dt, Channel channel, NoteNumber note, uint8_t velocity) override;
+	//	void note_off(Duration dt, Channel channel, NoteNumber note, uint8_t velocity) { }
+	//	void polyphonic_key_pressure(Duration dt, Channel channel, NoteNumber note, uint8_t pressure) { }
+	//	void control_change(Duration dt, Channel channel, uint8_t controller, uint8_t value) { }
+	//	void program_change(Duration dt, Channel channel, Instrument program) { }
+	//	void channel_pressure(Duration dt, Channel channel, uint8_t pressure) { }
+	//	void pitch_wheel_change(Duration dt, Channel channel, uint16_t value) { }
+
+	//	void meta(Duration dt, uint8_t type, std::unique_ptr<uint8_t[]> data, uint64_t data_size) { }
+	//	void sysex(Duration dt, std::unique_ptr<uint8_t[]> data, uint64_t data_size) { }
+
+
+
+	//};
 }
 #endif

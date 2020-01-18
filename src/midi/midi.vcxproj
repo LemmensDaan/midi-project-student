@@ -254,6 +254,7 @@
     <ClCompile Include="tests\02-midi\04-mtrk\01-mtrk-auxiliary-tests.cpp" />
     <ClCompile Include="tests\02-midi\04-mtrk\02-mtrk-event-receiver-tests.cpp" />
     <ClCompile Include="tests\02-midi\04-mtrk\03-mtrk-empty-tests.cpp" />
+    <ClCompile Include="tests\02-midi\04-mtrk\04-mtrk-meta-tests.cpp" />
     <ClCompile Include="tests\02-midi\04-mtrk\05-mtrk-sysex-tests.cpp" />
     <ClCompile Include="tests\02-midi\04-mtrk\06-mtrk-note-off-tests.cpp" />
     <ClCompile Include="tests\02-midi\04-mtrk\07-mtrk-note-on-tests.cpp" />

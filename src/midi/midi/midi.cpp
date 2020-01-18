@@ -112,6 +112,11 @@ namespace midi {
 
 	void read_mtrk(std::istream& in, EventReceiver& receiver)
 	{
+		CHUNK_HEADER header = CHUNK_HEADER();
+		read_chunk_header(in, &header);
+		if (header_id(header) != "Mtrk") {
+			false;
+		}
 		bool running = true;
 
 		while (running) {
@@ -207,5 +212,16 @@ namespace midi {
 		}
 
 	}
+
+	/*ChannelNoteCollector::ChannelNoteCollector(Channel channel_, std::function<void(const NOTE&)> notes_)
+	{
+		channel = channel_;
+		notes = notes_;
+	}
+
+	void ChannelNoteCollector::note_on(Duration dt, Channel channel, NoteNumber note, uint8_t velocity)
+	{
+		
+	}*/
 
 }

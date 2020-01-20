@@ -80,7 +80,6 @@ namespace midi
 
 
 	// EVENT RECEIVER
-
 	class EventReceiver
 	{
 	public:
@@ -101,6 +100,7 @@ namespace midi
 	| -- NOTES -- |
 	 ------------*/
 
+	// NOTE
 	struct NOTE {
 		NoteNumber note_number;
 		Time start;
@@ -139,6 +139,7 @@ namespace midi
 		}
 	};
 
+	// CHANNEL NOTE COLLECTOR
 	class ChannelNoteCollector : EventReceiver {
 	private:
 		Channel channel;
@@ -149,9 +150,11 @@ namespace midi
 
 		void note_on(Duration dt, Channel channel, NoteNumber note, uint8_t velocity) override;
 		void note_off(Duration dt, Channel channel, NoteNumber note, uint8_t velocity) override;
+		void program_change(Duration dt, Channel channel, Instrument program) override;
+
 		void polyphonic_key_pressure(Duration dt, Channel channel, NoteNumber note, uint8_t pressure) { }
 		void control_change(Duration dt, Channel channel, uint8_t controller, uint8_t value) { }
-		void program_change(Duration dt, Channel channel, Instrument program) { }
+
 		void channel_pressure(Duration dt, Channel channel, uint8_t pressure) { }
 		void pitch_wheel_change(Duration dt, Channel channel, uint16_t value) { }
 
@@ -162,6 +165,7 @@ namespace midi
 
 	};
 
+	// MULTICASTER
 	class EventMulticaster : public EventReceiver {
 	private:
 		std::vector<std::shared_ptr<EventReceiver>> events;
@@ -178,5 +182,17 @@ namespace midi
 		void meta(Duration dt, uint8_t type, std::unique_ptr<uint8_t[]> data, uint64_t data_size) override;
 		void sysex(Duration dt, std::unique_ptr<uint8_t[]> data, uint64_t data_size) override;
 	};
+
+	// NOTE COLLECTOR
+	class NoteCollector : public EventReceiver {
+	private:
+		std::function<void(const NOTE&)> note_receiver;
+	public:
+		NoteCollector(std::function<void(const NOTE&)> notes_);
+
+	};
+
+	// READ NOTES
+	std::vector<NOTE> read_notes(std::istream& in);
 }
 #endif

@@ -46,7 +46,6 @@ namespace midi {
 	 -----------*/
 
 	 // EVENTS
-
 	bool is_sysex_event(uint8_t byte)
 	{
 		return byte == 0xF0 || byte == 0xF7;
@@ -115,7 +114,6 @@ namespace midi {
 
 
 	// READ MTRK
-
 	void read_mtrk(std::istream& in, EventReceiver& receiver)
 	{
 		uint8_t previous = 0;
@@ -145,15 +143,12 @@ namespace midi {
 				if (data_size == 0) {
 					receiver.meta(dt, type, 0x00, data_size);
 
-					// END EVENT
 					if (type == 0x2F) {
 						uint32_t endpost = in.tellg();
 						running = false;
 					}
 				}
 				else {
-					//std::unique_ptr<char[]> ptr(new char[data_size]);
-					//in.read(ptr.get(), data_size);
 					receiver.meta(dt, type, std::move(data), data_size);
 				}
 			}
@@ -240,70 +235,36 @@ namespace midi {
 
 	void ChannelNoteCollector::note_on(Duration dt, Channel channel, NoteNumber note, uint8_t velocity)
 	{
-		/*if (this->channel == channel) {
+		if (this->channel == channel) {
 			if (velocity == 0) {
-				//delegeren aan ander event
-				note_off(dt, channel, note, 255);
+				note_off(dt, channel, note, 0);
 			}
 			else {
-				uint32_t max = 0;
-				for (unsigned i = 0; i < sizeof(note_receiver); i++) {
-					NOTE* foo = &(note_receiver->at(i));
-					if (foo->track == 0 && (foo->start + foo->duration) > max) {
-						max = foo->start + foo->duration;
-					}
-				}
-				note_receiver->push_back(NOTE{ channel, note, dt + max, 0 });
+				Instrument instrument;
+				Time start;
+				note_receiver(midi::NOTE{ note, start, dt, velocity, instrument });
 			}
-		}*/
+		}
 	}
 
 	void ChannelNoteCollector::note_off(Duration dt, Channel channel, NoteNumber note, uint8_t velocity)
 	{
-		/*if (this->channel == channel) {
-
-			NOTE* current = nullptr;
-			unsigned position = 0;
-			uint32_t max = 0;
-
-			for (unsigned i = 0; i < sizeof(note_receiver); i++) {
-				NOTE* foo = &(note_receiver->at(i));
-				if (foo->track == 0 && (foo->start + foo->duration) > max) {
-					//if ((foo->start + foo->duration) > max) {
-
-					max = foo->start + foo->duration;
-				}
-				if (foo->track == 0 && foo->note_index == note) {
-					current = foo;
-					position = i;
-				}
-			}
-
-			if (current != nullptr) {
-				current->duration = max - current->start + dt;
-
-				bool busy = true;
-				for (unsigned i = 0; i < sizeof(note_receiver); i++ && busy) {
-					NOTE* foo = &(note_receiver->at(i));
-					if (foo->duration == 0) {
-						if (i < position) {
-							notes->reserve(notes->size());
-							std::swap(notes->at(i), notes->at(position));
-							busy = false;
-						}
-					}
-				}
-			}
-		}*/
+		if (this->channel == channel) {
+			Instrument instrument;
+			Time start;
+			note_receiver(midi::NOTE{ note, start, dt, velocity, instrument });
+		}
 	}
 
+	void ChannelNoteCollector::program_change(Duration dt, Channel channel, Instrument program)
+	{
+	}
 	
 	// MULTICASTER
-
-	EventMulticaster::EventMulticaster(std::vector<std::shared_ptr<EventReceiver>> eventsin)
+	EventMulticaster::EventMulticaster(std::vector<std::shared_ptr<EventReceiver>> s)
 	{
-		for (unsigned i = 0; i < eventsin.size(); i++) {
-			events.push_back(eventsin[i]);
+		for (unsigned i = 0; i < s.size(); i++) {
+			events.push_back(s[i]);
 		}
 	}
 
@@ -369,5 +330,17 @@ namespace midi {
 			event->sysex(dt, std::move(data), data_size);
 		}
 	}
+
+	// NOTE COLLECTOR
+	NoteCollector::NoteCollector(std::function<void(const NOTE&)> notes_)
+	{
+		note_receiver = notes_;
+	}
+
+	// READ NOTES
+	std::vector<NOTE> read_notes(std::istream& in) {
+		return std::vector<NOTE>();
+	}
+	
 
 }
